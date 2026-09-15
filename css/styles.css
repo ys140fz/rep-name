@@ -1,0 +1,1241 @@
+/* =============================================================================
+   styles.css — Larisa Burgan / Designed Realty static site
+   -----------------------------------------------------------------------------
+   TASK 3: DESIGN-SYSTEM FOUNDATION ONLY
+   This file establishes the shared design system: color tokens, typography and
+   spacing scales, a base/reset layer, a centered content container utility, and
+   accessible focus indicators (Req 9.4, 10.4, 10.5).
+
+   Section-specific styles (header/nav, hero, about, listings grid, services,
+   testimonials, contact, footer) are appended by later tasks BELOW this
+   foundation. Keep those additions in the clearly-marked "SECTION STYLES"
+   region at the bottom so the design system stays isolated and readable.
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   1. DESIGN TOKENS (:root custom properties)
+   Values derived from the actual brand assets (Pacific Northwest theme) and the
+   design's verified contrast table (Req 10.4, 10.5).
+   ----------------------------------------------------------------------------- */
+:root {
+  /* --- Brand colors --- */
+  --color-navy:      #1A2B4A; /* Designed Realty logo background — primary surface */
+  --color-evergreen: #2E4A3C; /* PNW forest / headshot backdrop — secondary */
+  --color-cream:     #F7F5F0; /* soft off-white — neutral page background */
+  --color-white:     #FFFFFF; /* card surfaces */
+  --color-red:       #C0392B; /* Burgan Realty brick red — accent, used sparingly */
+
+  /* --- Text colors --- */
+  --color-text:        #1A1F26; /* near-black body text on light surfaces (>=15.6:1 on cream) */
+  --color-text-invert: #F7F5F0; /* cream text on dark (navy/evergreen) surfaces */
+
+  /* --- Focus ring colors ---
+     Default red ring meets >=3:1 on light surfaces (cream ~4.3:1, white ~4.7:1).
+     On dark surfaces, the ring switches to the cream variant to keep >=3:1
+     against navy (~12.8:1). See .site-header / .site-footer focus rules below. */
+  --color-focus:      #C0392B; /* high-visibility ring on light surfaces */
+  --color-focus-dark: #F7F5F0; /* cream ring variant for dark surfaces (navy/evergreen) */
+
+  /* --- Typography ---
+     System font stack: no web-font download, keeping the site self-contained
+     and file:// safe. rem-based sizing scales with user zoom. */
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --fs-h1:    2.5rem;   /* 40px — hero <h1> (large text) */
+  --fs-h2:    1.875rem; /* 30px — section headings (large text) */
+  --fs-h3:    1.25rem;  /* 20px — card / service titles (large text) */
+  --fs-body:  1rem;     /* 16px — body copy (meets 4.5:1) */
+  --fs-small: 0.875rem; /* 14px — sample labels, captions */
+
+  --line-height-body: 1.5; /* comfortable reading measure for body text */
+
+  /* --- Spacing scale --- */
+  --space-1: 0.25rem; /* 4px  */
+  --space-2: 0.5rem;  /* 8px  */
+  --space-3: 1rem;    /* 16px */
+  --space-4: 1.5rem;  /* 24px */
+  --space-5: 2rem;    /* 32px */
+  --space-6: 3rem;    /* 48px */
+
+  /* --- Layout --- */
+  --container-max: 1120px; /* centered content max-width */
+}
+
+/* -----------------------------------------------------------------------------
+   2. BASE / RESET LAYER
+   ----------------------------------------------------------------------------- */
+
+/* Predictable sizing: border-box everywhere (Req 9.4 — no width blowout). */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Sensible margin reset — remove default UA margins that cause layout drift. */
+body,
+h1, h2, h3, h4, h5, h6,
+p,
+figure,
+blockquote,
+ul,
+ol {
+  margin: 0;
+}
+
+/* Smooth in-page scrolling for anchor navigation (JS uses scrollIntoView;
+   this covers non-JS anchor jumps too). Overridden for reduced-motion below. */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text);
+  background-color: var(--color-cream);
+  /* Safety net against horizontal scroll for viewports 320–1920px (Req 9.4). */
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Responsive media: never overflow their container, keep intrinsic ratio. */
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Base heading sizing tied to the typography tokens. */
+h1 { font-size: var(--fs-h1); line-height: 1.2; }
+h2 { font-size: var(--fs-h2); line-height: 1.25; }
+h3 { font-size: var(--fs-h3); line-height: 1.3; }
+
+/* Base links: accessible color + underline on light surfaces. */
+a {
+  color: var(--color-navy);
+  text-decoration: underline;
+}
+
+a:hover {
+  color: var(--color-red);
+}
+
+/* Lists used for layout (nav, grids) opt out of default markers via utilities
+   in later section styles; base list styling stays default elsewhere. */
+
+/* -----------------------------------------------------------------------------
+   3. LAYOUT UTILITIES
+   ----------------------------------------------------------------------------- */
+
+/* Centered content container — fluid width, capped max-width, gutter padding.
+   Uses logical inline properties so it works regardless of writing direction. */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+/* -----------------------------------------------------------------------------
+   4. FOCUS INDICATORS (Req 10.5 — visible focus, >=3:1 contrast)
+   ----------------------------------------------------------------------------- */
+
+/* Visible focus ring for keyboard users on light surfaces. */
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Dark-surface variant: cream ring keeps >=3:1 contrast against navy on the
+   header and footer (red-on-navy would fall below the threshold). */
+.site-header :focus-visible,
+.site-footer :focus-visible {
+  outline-color: var(--color-focus-dark);
+}
+
+/* -----------------------------------------------------------------------------
+   5. MOTION PREFERENCES (respect prefers-reduced-motion at the base level)
+   ----------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Disable/neutralize non-essential animation & transitions site-wide. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =============================================================================
+   SECTION STYLES
+   -----------------------------------------------------------------------------
+   Later tasks append their section-specific styles below this line, building on
+   the tokens, base layer, container utility, and focus rules defined above.
+   (Task 4.2 header/nav · Task 5 hero · Task 6 about · Task 7.3 listings grid ·
+    Task 8 services · Task 9 testimonials · Task 10 contact · Task 11 footer)
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   TASK 4.2 — HEADER / NAVIGATION  (Req 8.2, 8.4, 8.5, 9.4)
+   -----------------------------------------------------------------------------
+   Sticky navy header with the brand on the left and the primary nav on the
+   right. Above the 768px breakpoint the nav is a horizontal cream link row and
+   the hamburger toggle is hidden; below 768px the toggle is shown and the
+   .nav-list collapses to a stacked, hidden-by-default menu.
+
+   >>> JS CONTRACT (Task 12.2) <<<
+   The mobile menu's open/closed state is driven purely by CSS off a single
+   hook: Task 12.2 MUST add/remove the class `is-open` on `#primary-nav`
+   (and keep the button's aria-expanded in sync: "true" when open, "false"
+   when closed). CSS reveals the mobile menu via `#primary-nav.is-open
+   .nav-list`. No other class/attribute is required to show or hide the menu.
+   The active-section link uses the `.is-active` class, also applied by JS.
+   ----------------------------------------------------------------------------- */
+
+/* Header surface: navy background, cream text, horizontal flex layout.
+   Sticky so it stays visible while scrolling; subtle bottom border + shadow
+   separate it from the cream page beneath. z-index keeps it above content. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  column-gap: var(--space-4);
+  row-gap: var(--space-2);
+  /* .container-like horizontal gutters + centered max-width behavior applied
+     inline here (the header is full-bleed navy, content is padded/centered). */
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-navy);
+  color: var(--color-text-invert);
+  border-bottom: 1px solid rgba(247, 245, 240, 0.14);
+  box-shadow: 0 2px 6px rgba(26, 43, 74, 0.25);
+}
+
+/* --- Brand (logo + wordmark) --- */
+.site-header .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;          /* remove base underline on the brand link */
+  color: var(--color-text-invert);
+  flex: 0 0 auto;
+}
+
+.site-header .brand:hover,
+.site-header .brand:focus-visible {
+  color: var(--color-text-invert); /* keep cream; underline stays off */
+  text-decoration: none;
+}
+
+/* Constrain the large source logo purely with CSS (small header size). */
+.site-header .brand-logo {
+  height: 44px;
+  width: auto;
+}
+
+.site-header .brand-name {
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--color-text-invert);
+  white-space: nowrap;
+}
+
+/* --- Nav list: shared (row) styling; markers off, no default underline --- */
+.nav-list {
+  list-style: none;               /* no bullets */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.nav-list a {
+  display: inline-block;
+  color: var(--color-text-invert);
+  text-decoration: none;          /* no underline by default */
+  font-weight: 500;
+  padding: var(--space-1) 0;
+  border-bottom: 2px solid transparent; /* reserve space for hover/active rule */
+}
+
+/* Accessible hover/focus state: underline-style bottom border in the red accent. */
+.nav-list a:hover,
+.nav-list a:focus-visible {
+  color: var(--color-text-invert);
+  border-bottom-color: var(--color-red);
+}
+
+/* Active-section indication (Req 8.5) — JS toggles `.is-active`. Distinct from
+   hover: bold weight + a solid cream underline so the current section reads
+   clearly even without color perception. */
+.nav-list a.is-active {
+  font-weight: 700;
+  border-bottom-color: var(--color-text-invert);
+}
+
+/* --- Mobile toggle (hamburger) --- Hidden by default (desktop); shown < 768px. */
+.nav-toggle {
+  display: none;                  /* revealed in the mobile media query below */
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;                    /* comfortable ~44px touch target */
+  height: 44px;
+  padding: 10px;
+  background-color: transparent;
+  border: 1px solid rgba(247, 245, 240, 0.35);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Cream hamburger bars on the navy surface. */
+.nav-toggle-bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-text-invert);
+  border-radius: 2px;
+}
+
+/* -----------------------------------------------------------------------------
+   RESPONSIVE — 768px nav breakpoint (Req 8.4)
+   ----------------------------------------------------------------------------- */
+
+/* MOBILE (< 768px): show the toggle, hide the menu by default, reveal it when
+   JS opens it via `#primary-nav.is-open`. Menu becomes a stacked column that
+   spans the full header width below the brand row. */
+@media (max-width: 767.98px) {
+  .nav-toggle {
+    display: inline-flex;         /* hamburger visible on mobile */
+  }
+
+  /* #primary-nav takes the full row so its expanded menu stacks under the brand. */
+  #primary-nav {
+    flex-basis: 100%;
+  }
+
+  .nav-list {
+    display: none;                /* collapsed by default on mobile */
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  /* JS hook (Task 12.2): adding `is-open` to #primary-nav reveals the stacked menu. */
+  #primary-nav.is-open .nav-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Full-width tappable rows in the stacked menu; subtle separators. */
+  .nav-list li {
+    width: 100%;
+  }
+
+  .nav-list a {
+    display: block;
+    width: 100%;
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid rgba(247, 245, 240, 0.12);
+  }
+
+  /* Keep hover/active accent readable in the stacked layout. */
+  .nav-list a:hover,
+  .nav-list a:focus-visible,
+  .nav-list a.is-active {
+    border-bottom-color: var(--color-red);
+  }
+
+  .nav-list a.is-active {
+    border-bottom-color: var(--color-text-invert);
+  }
+}
+
+/* DESKTOP (>= 768px): always show the horizontal nav row, always hide the toggle. */
+@media (min-width: 768px) {
+  .nav-toggle {
+    display: none;                /* hamburger hidden above the breakpoint */
+  }
+
+  .nav-list {
+    display: flex;                /* horizontal row, always visible */
+    flex-direction: row;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   STICKY-HEADER SCROLL ALIGNMENT (Req 8.2)
+   -----------------------------------------------------------------------------
+   Offset anchor targets by the sticky header height so smooth-scroll navigation
+   lands each section top just below the header (within ~5px), not underneath it.
+   ~64px matches the header height (44px logo + 2 x var(--space-3)=16px padding
+   ≈ 76px on desktop; 64px keeps a small consistent gap on all breakpoints). */
+section[id] {
+  scroll-margin-top: 64px;
+}
+
+
+/* -----------------------------------------------------------------------------
+   TASK 5 — HERO SECTION  (Req 1.1–1.4, 1.6, 1.7, 10.1, 10.7)
+   -----------------------------------------------------------------------------
+   Top-of-page band on the navy brand surface with cream text (contrast
+   ~12.8:1 — see verified contrast table). The Designed Realty logo has a navy
+   background, so it sits on a navy chip that blends with the band. A single
+   prominent CTA (.btn-primary) uses the red accent with white text (~4.9:1).
+   Centered, responsive layout using spacing tokens; no horizontal overflow.
+   ----------------------------------------------------------------------------- */
+
+/* Hero band: full-bleed navy surface, cream text, generous vertical rhythm. */
+#hero {
+  background-color: var(--color-navy);
+  color: var(--color-text-invert);
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Centered content column — capped width, centered text, comfortable spacing. */
+.hero-inner {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-3);
+}
+
+/* Navy chip framing the logo so its navy background blends with the band
+   instead of showing a hard edge against the cream page elsewhere. */
+.hero-logo-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+  background-color: var(--color-navy);
+  border: 1px solid rgba(247, 245, 240, 0.14);
+  border-radius: 12px;
+}
+
+/* Constrain the full-resolution source (2066x2074) purely via CSS. */
+.hero-logo {
+  width: auto;
+  max-width: 100%;
+  height: 180px;   /* ~160–200px per design; height: auto handled by base img rule via max-width */
+}
+
+/* Heading + supporting copy on the navy surface (cream text). */
+#hero h1 {
+  color: var(--color-text-invert);
+  margin: 0;
+}
+
+#hero .business {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  color: var(--color-text-invert);
+  margin: 0;
+}
+
+#hero .headline {
+  font-size: var(--fs-body);
+  color: var(--color-text-invert);
+  max-width: 60ch;   /* keep the headline to a comfortable measure */
+  margin: 0;
+}
+
+/* -----------------------------------------------------------------------------
+   PRIMARY CALL-TO-ACTION BUTTON  (Req 1.4)
+   -----------------------------------------------------------------------------
+   Button-styled anchor: red accent background, white text (~4.9:1 >= 4.5:1),
+   generous padding, rounded corners, and a clear hover state. Focus is handled
+   by the foundation :focus-visible ring (on the navy hero the header/footer
+   dark-surface override does not apply, so the red ring would sit on red — we
+   give the CTA a cream ring to keep >=3:1 against the red button). */
+.btn {
+  display: inline-block;
+  font-family: inherit;
+  font-size: var(--fs-body);
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;         /* remove base anchor underline */
+  padding: var(--space-3) var(--space-5);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-red);
+  color: var(--color-white);
+  margin-top: var(--space-2);
+}
+
+/* Hover / focus state: darkened red + subtle lift; keeps white text >=4.5:1. */
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background-color: #9C2C1E;    /* darker than #C0392B — white text contrast increases */
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+}
+
+/* Cream focus ring on the CTA so the indicator stays >=3:1 against the red
+   button and the surrounding navy hero (a red ring on red would be invisible). */
+.btn-primary:focus-visible {
+  outline-color: var(--color-focus-dark);
+}
+
+
+/* -----------------------------------------------------------------------------
+   TASK 6 — ABOUT SECTION  (Req 2.1–2.4, 10.1, 10.4)
+   -----------------------------------------------------------------------------
+   Light cream surface with near-black body text (~15.6:1 — see verified
+   contrast table, well above the 4.5:1 threshold). The headshot and the bio /
+   market copy sit side-by-side on wider screens and stack on narrow screens
+   using a wrapping flex layout with spacing tokens. No fixed widths exceed the
+   viewport, so there is no horizontal overflow (Req 9.4).
+   ----------------------------------------------------------------------------- */
+
+/* About band: cream surface, dark body text, generous vertical rhythm. */
+#about {
+  background-color: var(--color-cream);
+  color: var(--color-text);
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Centered content column — capped width, centered inline. */
+.about-inner {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+}
+
+#about h2 {
+  color: var(--color-text);
+  margin-bottom: var(--space-5);
+}
+
+/* Headshot + text layout: stacked by default (narrow screens), side-by-side on
+   wider screens. flex-wrap prevents overflow on very small viewports. */
+.about-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+/* Headshot: rendered width kept inside the 200–600px band via clamp
+   (min 200px, preferred 40vw, max 360px — never below 200px, never above 600px).
+   height:auto + object-fit:contain preserve the intrinsic 361:454 ratio with no
+   distortion (Req 2.2). flex-shrink:0 keeps it from being squeezed below 200px. */
+.headshot {
+  flex: 0 0 auto;
+  width: clamp(200px, 40vw, 360px);
+  max-width: 100%;   /* never overflow a container narrower than 200px */
+  height: auto;      /* preserve aspect ratio — no vertical stretch */
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(26, 43, 74, 0.18);
+}
+
+/* Text block flexes to fill the remaining row width; wraps below the image
+   on narrow screens. min-width:0 avoids flex overflow with long words. */
+.about-text {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+/* Bio: primary body copy, comfortable measure. */
+.about-text .bio {
+  font-size: var(--fs-body);
+  color: var(--color-text);
+  max-width: 60ch;
+  margin: 0;
+}
+
+/* Market area: secondary emphasis line beneath the bio. */
+.about-text .market {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--color-text);
+  margin-top: var(--space-3);
+}
+
+/* On narrow screens (single-column, Req 9.1) center the stacked image + text. */
+@media (max-width: 480px) {
+  .about-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-text .bio {
+    margin-inline: auto;
+  }
+}
+
+
+/* -----------------------------------------------------------------------------
+   TASK 7.3 — FEATURED LISTINGS GRID  (Req 3.x display, 9.1, 9.2, 9.3, 9.4)
+   -----------------------------------------------------------------------------
+   Light cream section matching the About band. The .listings-inner acts as the
+   centered content container (capped max-width, centered, padded). Property
+   cards render onto white surfaces so they read as distinct units on the cream
+   background. The grid is mobile-first responsive:
+
+     - <= 480px            : 1 column   (Req 9.1)
+     - 481px – 1023px      : 2 columns  (Req 9.3)
+     - >= 1024px           : 3 columns  (Req 9.2 — a "3+" layout)
+
+   Base is grid-template-columns: 1fr (single column), overridden upward at the
+   481px and 1024px breakpoints. min-width:0 on grid items and max-width:100% on
+   media guarantee no horizontal overflow across 320–1920px (Req 9.4).
+   ----------------------------------------------------------------------------- */
+
+/* Listings band: cream surface, dark body text, generous vertical rhythm —
+   consistent with the About section above it. */
+#listings {
+  background-color: var(--color-cream);
+  color: var(--color-text);
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Centered content column — capped width, centered inline (acts as container). */
+.listings-inner {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+}
+
+#listings h2 {
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+/* Section-level sample marker: a muted, italic caption beneath the heading. */
+#listings .sample-note {
+  font-size: var(--fs-small);
+  font-style: italic;
+  color: var(--color-evergreen);   /* muted vs. near-black body (~8.9:1 on cream) */
+  margin-bottom: var(--space-5);
+}
+
+/* --- The responsive grid ---
+   Mobile-first: a single 1fr column by default (<=480px, Req 9.1). Media
+   queries widen it to 2 then 3 columns. A comfortable gap uses spacing tokens. */
+.listings-grid {
+  display: grid;
+  grid-template-columns: 1fr;      /* 1 column base (<= 480px) — Req 9.1 */
+  gap: var(--space-4);
+}
+
+/* Grid items must be allowed to shrink below their content's intrinsic size so
+   long addresses / wide media never force horizontal overflow (Req 9.4). */
+.listings-grid > .property-card {
+  min-width: 0;
+}
+
+/* TABLET (481px–1023px): 2 columns — Req 9.3. */
+@media (min-width: 481px) {
+  .listings-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* DESKTOP (>= 1024px): 3 columns (a "3+" multi-column layout) — Req 9.2. */
+@media (min-width: 1024px) {
+  .listings-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* --- Property card ---
+   White card surface on the cream section, subtle border + rounded corners +
+   soft shadow so each card reads as a distinct unit. position:relative lets the
+   .card-sample-badge be absolutely positioned over the media. overflow:hidden
+   keeps the media's rounded top corners clipped and prevents any child bleed. */
+.property-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-white);
+  border: 1px solid rgba(26, 43, 74, 0.12);
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(26, 43, 74, 0.10);
+  overflow: hidden;
+}
+
+/* --- Card media / photo ---
+   Constrain every photo to the same image area (16:10 aspect ratio) so cards
+   line up regardless of the source image's intrinsic size. object-fit:cover
+   fills the box without distortion; max-width:100% + display:block keep the
+   image (and the placeholder SVG) inside the card with no overflow. */
+.card-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background-color: var(--color-cream); /* neutral backdrop behind the SVG placeholder */
+}
+
+.card-photo {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;    /* fill the media box, cropping evenly — no distortion */
+  display: block;
+}
+
+/* --- Sample badge ---
+   Small, clearly visible pill flagging the card as Placeholder_Content
+   (Req 3.4). Red accent with white text (~4.9:1 for small text >= 4.5:1).
+   Absolutely positioned over the top-left of the media. */
+.card-sample-badge {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 1;
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  background-color: var(--color-red);
+  color: var(--color-white);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  line-height: 1.2;
+  border-radius: 999px;   /* pill */
+  box-shadow: 0 1px 3px rgba(26, 43, 74, 0.30);
+}
+
+/* --- Card text block ---
+   Padded body beneath the media holding price / specs / address. */
+.property-card .card-price,
+.property-card .card-specs,
+.property-card .card-address {
+  padding-inline: var(--space-4);
+  margin: 0;
+}
+
+/* Price: prominent — larger and bold in near-black (Req 3.2 emphasis). */
+.property-card .card-price {
+  padding-top: var(--space-3);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* Specs (beds · baths): muted secondary line. */
+.property-card .card-specs {
+  padding-top: var(--space-2);
+  font-size: var(--fs-body);
+  color: var(--color-evergreen);   /* muted vs. price (~8.9:1 on white) */
+}
+
+/* Address: readable body copy; bottom padding closes out the card. */
+.property-card .card-address {
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-4);
+  font-size: var(--fs-body);
+  color: var(--color-text);
+}
+
+
+/* -----------------------------------------------------------------------------
+   TASK 8 — SERVICES SECTION  (Req 4.1–4.7, 9.1, 9.4, 10.4)
+   -----------------------------------------------------------------------------
+   The Services section sits on the white surface so it reads as a subtly
+   different band from the cream About / Listings sections above and below it,
+   giving the page visual rhythm while keeping near-black body text well above
+   the 4.5:1 threshold (~16.9:1 on white — see verified contrast table).
+
+   The four service entries are authored as static <li.service-card> items and
+   are ALL shown simultaneously (no accordion/tabs, Req 4.6). They lay out in a
+   responsive CSS Grid:
+
+     - <= 480px       : 1 column   (single-column, Req 9.1)
+     - >= 481px       : 2 columns  (pleasant multi-column layout on wider screens)
+
+   Base is grid-template-columns: 1fr (single column), widened to 2 columns at
+   the 481px breakpoint. min-width:0 on the cards prevents long titles from
+   forcing horizontal overflow across 320–1920px (Req 9.4).
+   ----------------------------------------------------------------------------- */
+
+/* Services band: white surface (distinct from the cream sections), dark body
+   text, generous vertical rhythm consistent with the other sections. */
+#services {
+  background-color: var(--color-white);
+  color: var(--color-text);
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Centered content column — capped width, centered inline (acts as container). */
+.services-inner {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+}
+
+#services h2 {
+  color: var(--color-text);
+  margin-bottom: var(--space-5);
+  text-align: center;
+}
+
+/* --- The responsive services grid ---
+   Mobile-first: a single 1fr column by default (<= 480px, Req 9.1); widened to
+   2 columns at 481px for a pleasant layout on tablets and desktops. List
+   markers removed since this is a layout list, not a bulleted list. */
+.services-grid {
+  list-style: none;                /* no bullets — layout grid, not a list */
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;      /* 1 column base (<= 480px) — Req 9.1 */
+  gap: var(--space-4);
+}
+
+/* Cards must be allowed to shrink below their content's intrinsic size so long
+   titles never force horizontal overflow (Req 9.4). */
+.services-grid > .service-card {
+  min-width: 0;
+}
+
+/* WIDER SCREENS (>= 481px): 2 columns for a balanced, pleasant layout. */
+@media (min-width: 481px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- Service card ---
+   Clean cream block on the white section, subtle border + rounded corners so
+   each service reads as a distinct unit. Column flex keeps the title above its
+   description with comfortable spacing. */
+.service-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background-color: var(--color-cream);
+  border: 1px solid rgba(26, 43, 74, 0.12);
+  border-radius: 12px;
+  padding: var(--space-5);
+}
+
+/* Service title: evergreen accent, large-text size token (Req 4.5 title).
+   Evergreen on cream is ~8.9:1 (well above 3:1 for large text). */
+.service-title {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  color: var(--color-evergreen);
+  margin: 0;
+}
+
+/* Service description: readable near-black body copy on the cream card
+   (~15.6:1, well above 4.5:1). Comfortable measure. */
+.service-desc {
+  font-size: var(--fs-body);
+  color: var(--color-text);
+  margin: 0;
+}
+
+
+/* -----------------------------------------------------------------------------
+   TASK 9 — TESTIMONIALS SECTION  (Req 5.1–5.5, 9.1, 9.4, 10.4)
+   -----------------------------------------------------------------------------
+   The Testimonials section sits on the navy brand surface with cream text
+   (~12.8:1 — see verified contrast table, well above the 4.5:1 body threshold),
+   giving the page a distinct accent band between the white Services section
+   above and the Contact section below. The .testimonials-inner acts as the
+   centered content container (capped max-width, centered, padded).
+
+   The two testimonials are authored as static <li.testimonial> items, each a
+   blockquote.quote paired one-to-one with a cite.attribution (Req 5.3). They lay
+   out in a responsive CSS Grid:
+
+     - <= 480px       : 1 column   (single-column, Req 9.1)
+     - >= 481px       : 2 columns  (balanced two-column layout on wider screens)
+
+   Base is grid-template-columns: 1fr (single column), widened to 2 columns at
+   the 481px breakpoint. min-width:0 on the cards keeps long quotes from forcing
+   horizontal overflow across 320–1920px (Req 9.4).
+   ----------------------------------------------------------------------------- */
+
+/* Testimonials band: navy surface, cream text, generous vertical rhythm. */
+#testimonials {
+  background-color: var(--color-navy);
+  color: var(--color-text-invert);
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Centered content column — capped width, centered inline (acts as container). */
+.testimonials-inner {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+}
+
+#testimonials h2 {
+  color: var(--color-text-invert);
+  margin-bottom: var(--space-5);
+  text-align: center;
+}
+
+/* --- The responsive testimonials grid ---
+   Mobile-first: a single 1fr column by default (<= 480px, Req 9.1); widened to
+   2 columns at 481px for a balanced layout on tablets and desktops. List markers
+   removed since this is a layout list, not a bulleted list. */
+.testimonials {
+  list-style: none;                /* no bullets — layout grid, not a list */
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;      /* 1 column base (<= 480px) — Req 9.1 */
+  gap: var(--space-4);
+}
+
+/* Cards must be allowed to shrink below their content's intrinsic size so long
+   quotes never force horizontal overflow (Req 9.4). */
+.testimonials > .testimonial {
+  min-width: 0;
+}
+
+/* WIDER SCREENS (>= 481px): 2 columns for a balanced two-column layout. */
+@media (min-width: 481px) {
+  .testimonials {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- Testimonial card ---
+   Subtle translucent-cream block on the navy band, with a soft border and a
+   red accent bar on the leading edge so each quote reads as a distinct unit.
+   Column flex keeps the quote above its attribution with comfortable spacing. */
+.testimonial {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background-color: rgba(247, 245, 240, 0.06); /* faint cream tint on navy */
+  border: 1px solid rgba(247, 245, 240, 0.14);
+  border-left: 4px solid var(--color-red);     /* red accent bar */
+  border-radius: 12px;
+  padding: var(--space-5);
+}
+
+/* Quote text: readable, slightly larger and italic with an opening quotation
+   mark for a classic testimonial feel. Cream text on navy (~12.8:1, well above
+   4.5:1). max-width keeps a comfortable measure; margin:0 (base reset handles). */
+.testimonial .quote {
+  position: relative;
+  font-size: 1.125rem;             /* slightly larger than body for emphasis */
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--color-text-invert);
+  margin: 0;
+  padding-top: var(--space-4);     /* room for the decorative quote mark above */
+}
+
+/* Decorative opening quotation mark — large, muted, and hidden from assistive
+   tech (purely visual; the quote text itself carries the meaning). */
+.testimonial .quote::before {
+  content: "\201C";                /* left double quotation mark */
+  position: absolute;
+  top: calc(-1 * var(--space-2));
+  left: 0;
+  font-size: 3rem;
+  line-height: 1;
+  /* Purely decorative accent glyph (the quote text itself carries the meaning),
+     so WCAG text-contrast does not strictly apply here. We still keep it above
+     3:1 on navy: solid --color-red is only ~2.6:1 on navy, so use a lighter
+     brand-accent salmon (~4.3:1) that preserves the warm accent look. */
+  color: #E06B5C;
+}
+
+/* Attribution line: distinct from the italic quote — upright, bold, and muted
+   cream so the one-to-one attribution reads clearly beneath each quote (Req 5.3,
+   5.4). aligned to the end of the card. */
+.testimonial .attribution {
+  font-size: var(--fs-body);
+  font-style: normal;              /* override <cite> default italic */
+  font-weight: 700;
+  color: var(--color-text-invert);
+  margin-top: auto;                /* push attribution to the card's lower edge */
+}
+
+
+/* -----------------------------------------------------------------------------
+   TASK 10 — CONTACT SECTION  (Req 6.1–6.4, 6.6, 6.8, 9.4, 10.4, 10.5)
+   -----------------------------------------------------------------------------
+   The Contact section sits on the light cream surface (consistent with the
+   About / Listings bands) so it reads as a calm closing band beneath the navy
+   Testimonials section above it. Near-black body text on cream is ~15.6:1, and
+   the navy contact links on cream are ~11.9:1 — both well above the 4.5:1 body
+   threshold (Req 10.4). Content is centered via a .contact-inner container.
+
+   There is no backend form: the phone and email are native tel:/mailto: anchors
+   (styled here for readability + clear hover/focus states). The foundation's
+   :focus-visible rule supplies the visible focus ring (Req 10.5); on this cream
+   surface the default red ring is ~4.3:1 (>=3:1). No fixed widths exceed the
+   viewport, so there is no horizontal overflow across 320–1920px (Req 9.4).
+   ----------------------------------------------------------------------------- */
+
+/* Contact band: cream surface, dark body text, generous vertical rhythm —
+   consistent with the About / Listings cream sections. */
+#contact {
+  background-color: var(--color-cream);
+  color: var(--color-text);
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Centered content column — capped width, centered inline, centered text. */
+.contact-inner {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  text-align: center;
+}
+
+#contact h2 {
+  color: var(--color-text);
+  margin-bottom: var(--space-5);
+}
+
+/* Contact details wrapper (<address>): override the UA italic default so the
+   phone / email / office lines render upright and readable. Stacked, centered,
+   comfortable spacing via spacing tokens. min-width:0 avoids overflow from a
+   long line on very narrow viewports (Req 9.4). */
+.contact-details {
+  font-style: normal;              /* <address> defaults to italic — reset it */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+/* Each contact line: label + value on one row, wrapping gracefully if needed. */
+.contact-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-2);
+  font-size: var(--fs-body);
+  color: var(--color-text);
+  margin: 0;
+  min-width: 0;
+  max-width: 100%;
+  /* allow very long values (e.g. the email) to break rather than overflow. */
+  overflow-wrap: anywhere;
+}
+
+/* "Call:" / "Email:" labels: muted evergreen, bold, so the value stands out.
+   Evergreen on cream is ~8.9:1 (well above 4.5:1). */
+.contact-label {
+  font-weight: 700;
+  color: var(--color-evergreen);
+}
+
+/* Contact links (tel / mailto): navy on cream (~11.9:1 >= 4.5:1), bold, with a
+   default underline for affordance. Clear hover/focus states below; the visible
+   focus ring is supplied by the foundation :focus-visible rule (Req 10.5). */
+.contact-details a {
+  color: var(--color-navy);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  overflow-wrap: anywhere;         /* long email never forces horizontal scroll */
+}
+
+/* Hover / focus: shift to the red accent (white-on-cream contrast preserved)
+   and thicken the underline so the interactive state is unmistakable. */
+.contact-details a:hover,
+.contact-details a:focus-visible {
+  color: var(--color-red);         /* red on cream ~4.9:1 (>=4.5:1) */
+  text-decoration-thickness: 2px;
+}
+
+/* Office address line: readable near-black body copy; a touch of top spacing
+   separates it from the phone / email links above. */
+.contact-details .office {
+  color: var(--color-text);
+  margin-top: var(--space-2);
+}
+
+
+/* -----------------------------------------------------------------------------
+   TASK 11 — FOOTER + SOCIAL LINKS  (Req 7.1–7.7, 9.4, 10.1, 10.3, 10.5)
+   -----------------------------------------------------------------------------
+   The footer sits on the DARK NAVY surface — the correct home for the two brand
+   marks, which have black / black-and-white backgrounds and would clash on the
+   light cream sections above. Cream text on navy is ~12.8:1 (well above 4.5:1,
+   Req 10.4). The foundation supplies the dark-surface focus ring via
+   `.site-footer :focus-visible` (cream ring, >=3:1 on navy, Req 10.5), so no
+   focus styling is repeated here.
+
+   Layout: a centered column that stacks the social links, the two logos, and the
+   copyright line, all centered. Everything wraps gracefully and no fixed width
+   exceeds the viewport, so there is no horizontal overflow across 320–1920px
+   (Req 9.4). On wider screens the social links and logos read as centered rows.
+   ----------------------------------------------------------------------------- */
+
+/* Footer band: navy surface, cream text, generous vertical rhythm. */
+.site-footer {
+  background-color: var(--color-navy);
+  color: var(--color-text-invert);
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Centered content column — capped width, centered, stacked with comfortable
+   spacing. Centering keeps the social row and logos tidy on mobile (Req 9.1). */
+.footer-inner {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  text-align: center;
+}
+
+/* -------------------------------------------------
+   Social links (Req 7.1–7.4, 7.7, 10.3)
+   ------------------------------------------------- */
+
+/* The social nav: a centered, wrapping row of links. Wrapping guarantees the
+   four links never force horizontal scroll on very narrow viewports (Req 9.4). */
+.social {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* Each social link: cream icon + label, no underline (icon + text conveys the
+   affordance), padded for a comfortable touch/click target. The visible focus
+   ring is provided by the foundation `.site-footer :focus-visible` rule. */
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text-invert);   /* cream on navy ~12.8:1 (>=4.5:1) */
+  text-decoration: none;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  padding: var(--space-2);
+  border-radius: 4px;
+}
+
+/* Icon: sized ~24px, inherits the cream link color via fill="currentColor" on
+   the SVG paths. Marked decorative in the markup (aria-hidden); the anchor's
+   aria-label + visible .social-label carry the accessible name. */
+.social-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+/* Hover / focus: shift to the brand red accent so the interactive state is
+   unmistakable on the dark surface, and underline the text label. (Keyboard
+   focus additionally shows the cream ring from the foundation.) */
+.social-link:hover,
+.social-link:focus-visible {
+  color: var(--color-red);
+}
+
+.social-link:hover .social-label,
+.social-link:focus-visible .social-label {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* -------------------------------------------------
+   Footer logos (Req 10.1)
+   ------------------------------------------------- */
+
+/* Both marks (black / black-and-white backgrounds) sit on the navy surface.
+   Centered, wrapping row so they stack cleanly on narrow screens (Req 9.1). */
+.footer-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+/* Display each logo at a reasonable height with auto width so its intrinsic
+   aspect ratio is preserved (the base layer already caps img width to 100%). */
+.footer-logo {
+  height: 56px;
+  width: auto;
+  max-width: 100%;
+}
+
+/* -------------------------------------------------
+   Copyright line
+   ------------------------------------------------- */
+
+/* Small, muted-but-legible cream copyright note. Cream on navy stays ~12.8:1. */
+.footer-copy {
+  margin: 0;
+  font-size: var(--fs-small);
+  color: var(--color-text-invert);
+}
+
+/* Narrow screens: tighten the footer padding a touch and shrink the logos so
+   two side-by-side never overflow; the flex containers already wrap and center,
+   so the layout collapses to a single centered column (Req 9.1, 9.4). */
+@media (max-width: 480px) {
+  .site-footer {
+    padding: var(--space-5) var(--space-3);
+  }
+
+  .footer-logo {
+    height: 48px;
+  }
+}
+
+
+
+/* -----------------------------------------------------------------------------
+   TASK 13 — RESPONSIVE VERIFICATION SAFEGUARD  (Req 9.4, 9.5)
+   -----------------------------------------------------------------------------
+   Verification of the responsive layout confirmed the .listings-grid column
+   counts (1 / 2 / 3 at <=480 / 481-1023 / >=1024) and the global no-overflow
+   safeguards (box-sizing:border-box, img/svg max-width:100%, body overflow-x:
+   hidden, grid items min-width:0, wrapping flex rows, overflow-wrap on long
+   contact values) all satisfy Requirement 9.
+
+   The single residual overflow risk found was the brand wordmark
+   ".brand-name { white-space: nowrap }". At the required range (320-1920px) the
+   header's flex-wrap already prevents overflow, but on ultra-narrow viewports
+   below 320px (Req 9.5) an unbreakable ~150px wordmark next to the 44px logo and
+   44px toggle is a latent risk. Below 360px we let the wordmark wrap/break so the
+   brand row can never force horizontal scrolling. Desktop and the entire
+   320-1920px range are visually unchanged (this rule only applies < 360px).
+   ----------------------------------------------------------------------------- */
+@media (max-width: 359.98px) {
+  .site-header .brand-name {
+    white-space: normal;      /* allow the wordmark to wrap on ultra-narrow screens */
+    overflow-wrap: anywhere;  /* break as a last resort so it never forces overflow */
+  }
+}
