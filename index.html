@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Larisa Burgan | Designed Realty — Greater Puget Sound Real Estate</title>
+  <meta name="description" content="Larisa Burgan, trusted real estate agent with Designed Realty (Kirkland Office), serving buyers and sellers across the Greater Puget Sound Region.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Site header + primary navigation. Task 4.1 populates the brand link,
+       mobile nav toggle button, and the five nav links (About, Listings,
+       Services, Testimonials, Contact) inside #primary-nav. -->
+  <header class="site-header">
+    <!-- Brand: small logo + wordmark, links back to the hero (top of page). -->
+    <a class="brand" href="#hero">
+      <!-- Inline onerror hides the broken image and reveals its alt text (Req 1.7 / 10.2 style).
+           Task 12.1 additionally wires handleImageError() from js/main.js to statically authored images. -->
+      <img class="brand-logo" src="images/DesignedRealtyLogo.jpeg" alt="Designed Realty logo"
+           onerror="this.style.display='none'">
+      <span class="brand-name">Designed Realty</span>
+    </a>
+
+    <!-- Mobile nav toggle. Visible only below 768px (Task 4.2 CSS); behavior wired in Task 12.2.
+         aria-controls references the id of the element that expands/collapses: the #primary-nav
+         element, which wraps the .nav-list that is shown/hidden on mobile. -->
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation menu"
+            aria-expanded="false" aria-controls="primary-nav">
+      <!-- Simple hamburger icon; decorative, hidden from assistive tech. -->
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
+
+    <!-- Primary navigation. The #primary-nav element is the toggle's aria-controls target and
+         the element whose visibility flips on mobile; it contains exactly five in-page links. -->
+    <nav id="primary-nav" aria-label="Primary">
+      <ul class="nav-list">
+        <li><a href="#about">About</a></li>
+        <li><a href="#listings">Listings</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Task 5: Hero — logo, the page's single level-1 heading "Larisa Burgan", business, headline, CTA -->
+    <section id="hero">
+      <div class="hero-inner">
+        <!-- Company logo (navy background) presented on a navy chip so it blends with the
+             hero band rather than clashing with the cream page (see design: dark-bg logo handling).
+             The large source (2066x2074) is constrained purely via CSS on .hero-logo.
+             Inline onerror hides the broken image and reveals its alt text (Req 1.7 / 10.2);
+             Task 12.1 additionally wires handleImageError() from js/main.js. -->
+        <span class="hero-logo-chip">
+          <img class="hero-logo" src="images/DesignedRealtyLogo.jpeg"
+               alt="Designed Realty logo" onerror="this.style.display='none'">
+        </span>
+
+        <!-- The one and only level-1 heading for the page (Req 1.1, 10.7). -->
+        <h1>Larisa Burgan</h1>
+        <p class="business">Designed Realty (Kirkland Office)</p>
+        <p class="headline">Trusted Real Estate Agent Serving the Greater Puget Sound Region</p>
+
+        <!-- Exactly one call-to-action (Req 1.4). The href is enough for now;
+             Task 12.1 owns the smooth-scroll behavior. -->
+        <a class="btn btn-primary" href="#contact">Contact Me</a>
+      </div>
+    </section>
+
+    <!-- Task 6: About — level-2 heading, headshot, bio, market area (Req 2.1–2.4, 10.1) -->
+    <section id="about">
+      <div class="about-inner">
+        <!-- Section heading is a level-2 (the page's single <h1> lives in the hero). -->
+        <h2>About Larisa</h2>
+
+        <div class="about-content">
+          <!-- Headshot (intrinsic 361x454). Rendered width is constrained to the
+               200–600px band via CSS (.headshot) with height:auto + object-fit:contain
+               so the aspect ratio is preserved with no distortion (Req 2.2).
+               Inline onerror hides the broken image so its descriptive alt text
+               (identifying the agent) shows in place of it (Req 2.3 / 10.1);
+               Task 12.1 additionally wires handleImageError() from js/main.js. -->
+          <img class="headshot" src="images/BusinessPhoto.jpeg"
+               alt="Larisa Burgan, real estate agent with Designed Realty"
+               width="361" height="454"
+               onerror="this.style.display='none'">
+
+          <div class="about-text">
+            <!-- Bio: exact verbatim string required by Req 2.1. -->
+            <p class="bio">Dedicated realtor helping buyers find their dream home and sellers get top-dollar for their sale</p>
+            <!-- Market area: contains the exact substring "Greater Puget Sound Region" (Req 2.4). -->
+            <p class="market">Serving the Greater Puget Sound Region</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Task 7: Featured Listings — level-2 heading, sample note, .listings-grid (JS-rendered) -->
+    <section id="listings">
+      <div class="listings-inner">
+        <!-- Section heading is a level-2 (the page's single <h1> lives in the hero). -->
+        <h2>Featured Listings</h2>
+
+        <!-- Section-level sample marker (Req 3.3 / 3.4): all current listings are
+             Placeholder_Content, so this note flags the whole section as illustrative. -->
+        <p class="sample-note">Sample listings shown for illustration.</p>
+
+        <!-- Empty grid container. Task 7.2's renderListings() (js/main.js) populates this
+             with article.property-card children from SAMPLE_LISTINGS; Task 7.3 adds the
+             responsive grid CSS. Left intentionally empty of cards here. -->
+        <div class="listings-grid"></div>
+      </div>
+    </section>
+
+    <!-- Task 8: Services — level-2 heading, four service cards (Req 4.1–4.7, 9.1) -->
+    <section id="services">
+      <div class="services-inner">
+        <!-- Section heading is a level-2 (the page's single <h1> lives in the hero). -->
+        <h2>Services</h2>
+
+        <!-- All four service entries are rendered as static HTML and shown
+             simultaneously — no accordion/tabs, no user interaction required to
+             reveal them (Req 4.6). Each entry has a non-empty title (1–60 chars)
+             and a non-empty description (1–300 chars) per Req 4.5; since all four
+             are authored with valid content, the omission rule (Req 4.7) leaves
+             every entry displayed. -->
+        <ul class="services-grid">
+          <!-- Req 4.1 — Buying -->
+          <li class="service-card">
+            <h3 class="service-title">Buying</h3>
+            <p class="service-desc">Guiding buyers through every step of finding and purchasing the right home.</p>
+          </li>
+
+          <!-- Req 4.2 — Selling -->
+          <li class="service-card">
+            <h3 class="service-title">Selling</h3>
+            <p class="service-desc">Positioning and marketing your property to sell for top dollar.</p>
+          </li>
+
+          <!-- Req 4.3 — Buyer Professional Guidance -->
+          <li class="service-card">
+            <h3 class="service-title">Buyer Professional Guidance</h3>
+            <p class="service-desc">Expert advice, market insight, and negotiation support for buyers.</p>
+          </li>
+
+          <!-- Req 4.4 — Seller Professional Guidance -->
+          <li class="service-card">
+            <h3 class="service-title">Seller Professional Guidance</h3>
+            <p class="service-desc">Pricing strategy, staging direction, and negotiation support for sellers.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Task 9: Testimonials — level-2 heading, two quotes + attributions (Req 5.1–5.5, 9.1) -->
+    <section id="testimonials">
+      <div class="testimonials-inner">
+        <!-- Section heading is a level-2 (the page's single <h1> lives in the hero). -->
+        <h2>What Clients Say</h2>
+
+        <!-- Two testimonials, each a blockquote.quote rendering the exact quote
+             verbatim paired one-to-one with exactly one cite.attribution (Req 5.3).
+             No real client names were supplied, so each attribution uses a
+             non-empty Placeholder_Content string, "— Verified Client" (Req 5.4).
+             Both quotes are valid/non-empty, so the omission rule (Req 5.5) — which
+             drops a testimonial only when its quote is empty/missing — leaves both
+             displayed. List markers are removed via CSS (.testimonials). -->
+        <ul class="testimonials">
+          <!-- Req 5.1 — quote rendered verbatim (note the ASCII apostrophe in "couldn't"). -->
+          <li class="testimonial">
+            <blockquote class="quote">Larisa helped us every step of the way with buying our first home. She did a great job and we couldn't be happier!</blockquote>
+            <cite class="attribution">— Verified Client</cite>
+          </li>
+
+          <!-- Req 5.2 — quote rendered verbatim. -->
+          <li class="testimonial">
+            <blockquote class="quote">Larisa made my remote home purchase from across the country easy and painless. Thank you Larisa!</blockquote>
+            <cite class="attribution">— Verified Client</cite>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Task 10: Contact — level-2 heading, phone (tel), email (mailto), office address -->
+    <section id="contact">
+      <div class="contact-inner">
+        <!-- Section heading is a level-2 (the page's single <h1> lives in the hero). -->
+        <h2>Contact Me</h2>
+
+        <!-- Contact details grouped in a semantic <address> element for accessibility.
+             There is NO backend form: the phone and email are native tel:/mailto:
+             anchors, so activation is delegated entirely to the visitor's OS default
+             dialer / mail application. If no handler is registered for the scheme, the
+             browser takes no navigation action and the section stays unchanged (Req 6.8)
+             — this is native anchor behavior and needs no JavaScript. -->
+        <address class="contact-details">
+          <!-- Phone: visible text is EXACTLY "425-422-1925" (Req 6.1); the tel href is
+               EXACTLY "tel:+14254221925" (Req 6.6). The "Call:" label is outside the
+               anchor so the anchor's visible text stays exactly the phone number. -->
+          <p class="contact-line contact-phone">
+            <span class="contact-label">Call:</span>
+            <a href="tel:+14254221925">425-422-1925</a>
+          </p>
+
+          <!-- Email: visible text is EXACTLY "burganland@gmail.com" (Req 6.2); the mailto
+               href is EXACTLY "mailto:burganland@gmail.com" (Req 6.4). The "Email:" label
+               is outside the anchor so the anchor's visible text stays exactly the email. -->
+          <p class="contact-line contact-email">
+            <span class="contact-label">Email:</span>
+            <a href="mailto:burganland@gmail.com">burganland@gmail.com</a>
+          </p>
+
+          <!-- Office address: visible text EXACTLY as required (Req 6.3). -->
+          <p class="contact-line office">105 Central Way, Suite 202, Kirkland, WA 98033</p>
+        </address>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site footer — sits on the DARK NAVY surface (see .site-footer CSS). This is
+       where the Burgan Realty (black bg) and Equal Housing (b/w) marks belong,
+       never on the light cream sections above. Contains the social links plus
+       the two footer logos, and a small static copyright line. -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <!-- Social links (Req 7.1–7.4): EXACTLY ONE anchor each for Instagram,
+           Facebook, LinkedIn, Zillow. Each anchor:
+             - has an aria-label naming the platform, so assistive tech announces
+               the platform even though the label is also visible (Req 7.3, 10.3);
+             - opens in a NEW TAB via target="_blank" and, critically, sets
+               rel="noopener noreferrer" so the opened page cannot reach
+               window.opener and no referrer leaks (Req 7.7);
+             - uses a PLACEHOLDER href="#" because no real profile URLs were
+               supplied yet. The data-todo="add-<platform>-url" marker + the
+               inline comment flag each one for replacement; when the real URL is
+               provided it replaces both the "#" href and removes the data-todo
+               marker (Req 7.5, 7.6).
+           Each anchor pairs an inline SVG icon (decorative, aria-hidden) with a
+           visible text label so the link is identifiable with or without CSS/
+           icon rendering, and stays accessible on a static file:// site. -->
+      <nav class="social" aria-label="Social media">
+        <!-- TODO: replace href="#" with the real Instagram profile URL and drop data-todo. -->
+        <a class="social-link" href="#" data-todo="add-instagram-url"
+           target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg class="social-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M12 2c-2.7 0-3 .01-4.1.06-1.1.05-1.8.22-2.4.46-.7.26-1.2.61-1.8 1.2-.6.6-.94 1.1-1.2 1.8-.24.6-.41 1.3-.46 2.4C2.01 9 2 9.3 2 12s.01 3 .06 4.1c.05 1.1.22 1.8.46 2.4.26.7.61 1.2 1.2 1.8.6.6 1.1.94 1.8 1.2.6.24 1.3.41 2.4.46C9 21.99 9.3 22 12 22s3-.01 4.1-.06c1.1-.05 1.8-.22 2.4-.46.7-.26 1.2-.61 1.8-1.2.6-.6.94-1.1 1.2-1.8.24-.6.41-1.3.46-2.4.05-1.1.06-1.4.06-4.1s-.01-3-.06-4.1c-.05-1.1-.22-1.8-.46-2.4-.26-.7-.61-1.2-1.2-1.8-.6-.6-1.1-.94-1.8-1.2-.6-.24-1.3-.41-2.4-.46C15 2.01 14.7 2 12 2Zm0 1.8c2.67 0 2.98.01 4.03.06.97.04 1.5.21 1.85.35.47.18.8.4 1.15.75.35.35.57.68.75 1.15.14.35.31.88.35 1.85.05 1.05.06 1.36.06 4.03s-.01 2.98-.06 4.03c-.04.97-.21 1.5-.35 1.85-.18.47-.4.8-.75 1.15-.35.35-.68.57-1.15.75-.35.14-.88.31-1.85.35-1.05.05-1.36.06-4.03.06s-2.98-.01-4.03-.06c-.97-.04-1.5-.21-1.85-.35-.47-.18-.8-.4-1.15-.75-.35-.35-.57-.68-.75-1.15-.14-.35-.31-.88-.35-1.85-.05-1.05-.06-1.36-.06-4.03s.01-2.98.06-4.03c.04-.97.21-1.5.35-1.85.18-.47.4-.8.75-1.15.35-.35.68-.57 1.15-.75.35-.14.88-.31 1.85-.35C9.02 3.81 9.33 3.8 12 3.8Zm0 3.06A5.14 5.14 0 1 0 12 17.14 5.14 5.14 0 0 0 12 6.86Zm0 8.47A3.33 3.33 0 1 1 12 8.67a3.33 3.33 0 0 1 0 6.66Zm5.34-8.67a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0Z"/>
+          </svg>
+          <span class="social-label">Instagram</span>
+        </a>
+
+        <!-- TODO: replace href="#" with the real Facebook profile URL and drop data-todo. -->
+        <a class="social-link" href="#" data-todo="add-facebook-url"
+           target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <svg class="social-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12Z"/>
+          </svg>
+          <span class="social-label">Facebook</span>
+        </a>
+
+        <!-- TODO: replace href="#" with the real LinkedIn profile URL and drop data-todo. -->
+        <a class="social-link" href="#" data-todo="add-linkedin-url"
+           target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg class="social-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14ZM7.12 20.45H3.55V9h3.57v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z"/>
+          </svg>
+          <span class="social-label">LinkedIn</span>
+        </a>
+
+        <!-- TODO: replace href="#" with the real Zillow profile URL and drop data-todo. -->
+        <a class="social-link" href="#" data-todo="add-zillow-url"
+           target="_blank" rel="noopener noreferrer" aria-label="Zillow">
+          <svg class="social-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M12 1.5 2 9.02v2.6l3.29-2.48 1.6 1.98L3.2 14.1c-.4.31-.62.79-.62 1.29V21h18.84v-5.6c0-.5-.22-.99-.62-1.3l-3.68-2.98 1.6-1.98L22 11.62V9.02L12 1.5Zm0 2.53 6.06 4.56-1.62 2 .01.01L12 14.13l-4.45-3.53 1.62-2L12 4.03Z"/>
+          </svg>
+          <span class="social-label">Zillow</span>
+        </a>
+      </nav>
+
+      <!-- Footer logos (Req 10.1): both marks have dark/black backgrounds, so they
+           sit cleanly on the navy footer surface. Each carries a non-empty,
+           descriptive alt of <=125 chars. Inline onerror hides a broken image so
+           its alt text shows in its place; Task 12.1 additionally wires
+           handleImageError() from js/main.js to statically authored images. -->
+      <div class="footer-logos">
+        <img class="footer-logo" src="images/BurganRealtyLogo.jpeg"
+             alt="Burgan Realty logo" onerror="this.style.display='none'">
+        <img class="footer-logo" src="images/EqualHousingLogo.jpeg"
+             alt="Equal Housing Opportunity logo" onerror="this.style.display='none'">
+      </div>
+
+      <!-- Small static copyright line — hardcoded, no JavaScript required. -->
+      <p class="footer-copy">&copy; 2025 Larisa Burgan &middot; Designed Realty</p>
+    </div>
+  </footer>
+
+  <script defer src="js/main.js"></script>
+</body>
+</html>

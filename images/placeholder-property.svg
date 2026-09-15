@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300"
+     role="img" aria-label="Property photo unavailable" preserveAspectRatio="xMidYMid meet">
+  <!-- Self-contained placeholder for a listing photo. No external references,
+       no remote fonts or images, so it always resolves under file://. -->
+  <rect width="400" height="300" fill="#e5e7eb"/>
+  <rect x="0.5" y="0.5" width="399" height="299" fill="none" stroke="#cbd2da" stroke-width="1"/>
+  <!-- House silhouette -->
+  <g fill="#9aa4b1">
+    <!-- roof -->
+    <path d="M200 96 L272 150 L128 150 Z"/>
+    <!-- body -->
+    <rect x="150" y="150" width="100" height="70"/>
+  </g>
+  <!-- door (cut-out via background color) -->
+  <rect x="188" y="182" width="24" height="38" fill="#e5e7eb"/>
+  <!-- window -->
+  <rect x="160" y="160" width="20" height="20" fill="#e5e7eb"/>
+  <rect x="220" y="160" width="20" height="20" fill="#e5e7eb"/>
+  <!-- caption -->
+  <text x="200" y="256" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+        font-size="18" fill="#6b7280">Photo unavailable</text>
+</svg>
