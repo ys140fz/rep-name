@@ -1251,7 +1251,7 @@ section[id] {
    so the box shows ONLY the black-rectangle region and clips the surrounding
    margin. overflow:hidden performs the visual crop.
 
-   - .logo-crop--burgan: the black area is the CENTER SQUARE of the 1920x1080
+   - .logo-crop--burgan-hero: the black area is the CENTER SQUARE of the 1920x1080
      source (white bars left/right). A 1:1 box + object-fit:cover centers on that
      square and hides the side bars.
    - .logo-crop--equalhousing: the black area is the TOP block of the 1224x1584
@@ -1273,16 +1273,6 @@ section[id] {
   height: 100%;
   object-fit: cover;              /* fill the box, cropping the overflow */
   max-width: none;                /* override the global img max-width:100% cap */
-}
-
-/* --- Burgan mark in the header, right of the "Designed Realty" wordmark --- */
-/* Square box matched to the header brand-logo height (44px) so it lines up. */
-.logo-crop--burgan {
-  width: 44px;
-  height: 44px;
-}
-.logo-crop--burgan img {
-  object-position: center center; /* center on the black square */
 }
 
 /* --- Burgan mark in the HERO, large size (replaces the old Designed Realty logo) --- */
