@@ -37,9 +37,7 @@
     <nav id="primary-nav" aria-label="Primary">
       <ul class="nav-list">
         <li><a href="#about">About</a></li>
-        <li><a href="#listings">Listings</a></li>
         <li><a href="#services">Services</a></li>
-        <li><a href="#testimonials">Testimonials</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </nav>
@@ -91,27 +89,14 @@
           <div class="about-text">
             <!-- Bio: exact verbatim string required by Req 2.1. -->
             <p class="bio">Dedicated realtor helping buyers find their dream home and sellers get top-dollar for their sale</p>
+            <!-- Core values. -->
+            <p class="values">Experience &middot; Integrity &middot; Diligence</p>
+            <!-- Investing experience. -->
+            <p class="investor">An investor in real estate since 2005.</p>
             <!-- Market area: contains the exact substring "Greater Puget Sound Region" (Req 2.4). -->
             <p class="market">Serving the Greater Puget Sound Region</p>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- Task 7: Featured Listings — level-2 heading, sample note, .listings-grid (JS-rendered) -->
-    <section id="listings">
-      <div class="listings-inner">
-        <!-- Section heading is a level-2 (the page's single <h1> lives in the hero). -->
-        <h2>Featured Listings</h2>
-
-        <!-- Section-level sample marker (Req 3.3 / 3.4): all current listings are
-             Placeholder_Content, so this note flags the whole section as illustrative. -->
-        <p class="sample-note">Sample listings shown for illustration.</p>
-
-        <!-- Empty grid container. Task 7.2's renderListings() (js/main.js) populates this
-             with article.property-card children from SAMPLE_LISTINGS; Task 7.3 adds the
-             responsive grid CSS. Left intentionally empty of cards here. -->
-        <div class="listings-grid"></div>
       </div>
     </section>
 
@@ -150,35 +135,6 @@
           <li class="service-card">
             <h3 class="service-title">Seller Professional Guidance</h3>
             <p class="service-desc">Pricing strategy, staging direction, and negotiation support for sellers.</p>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Task 9: Testimonials — level-2 heading, two quotes + attributions (Req 5.1–5.5, 9.1) -->
-    <section id="testimonials">
-      <div class="testimonials-inner">
-        <!-- Section heading is a level-2 (the page's single <h1> lives in the hero). -->
-        <h2>What Clients Say</h2>
-
-        <!-- Two testimonials, each a blockquote.quote rendering the exact quote
-             verbatim paired one-to-one with exactly one cite.attribution (Req 5.3).
-             No real client names were supplied, so each attribution uses a
-             non-empty Placeholder_Content string, "— Verified Client" (Req 5.4).
-             Both quotes are valid/non-empty, so the omission rule (Req 5.5) — which
-             drops a testimonial only when its quote is empty/missing — leaves both
-             displayed. List markers are removed via CSS (.testimonials). -->
-        <ul class="testimonials">
-          <!-- Req 5.1 — quote rendered verbatim (note the ASCII apostrophe in "couldn't"). -->
-          <li class="testimonial">
-            <blockquote class="quote">Larisa helped us every step of the way with buying our first home. She did a great job and we couldn't be happier!</blockquote>
-            <cite class="attribution">— Verified Client</cite>
-          </li>
-
-          <!-- Req 5.2 — quote rendered verbatim. -->
-          <li class="testimonial">
-            <blockquote class="quote">Larisa made my remote home purchase from across the country easy and painless. Thank you Larisa!</blockquote>
-            <cite class="attribution">— Verified Client</cite>
           </li>
         </ul>
       </div>
