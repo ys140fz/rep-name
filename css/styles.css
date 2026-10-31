@@ -1239,3 +1239,63 @@ section[id] {
     overflow-wrap: anywhere;  /* break as a last resort so it never forces overflow */
   }
 }
+
+
+/* -----------------------------------------------------------------------------
+   CSS-CROPPED LOGOS (relocated marks)
+   -----------------------------------------------------------------------------
+   The Burgan Realty and Equal Housing source JPEGs each contain only a black
+   rectangle surrounded by extra margin (white side bars on Burgan; white space
+   below on Equal Housing). Rather than re-exporting the raster files, each image
+   is placed inside a fixed-size .logo-crop box and scaled with object-fit:cover
+   so the box shows ONLY the black-rectangle region and clips the surrounding
+   margin. overflow:hidden performs the visual crop.
+
+   - .logo-crop--burgan: the black area is the CENTER SQUARE of the 1920x1080
+     source (white bars left/right). A 1:1 box + object-fit:cover centers on that
+     square and hides the side bars.
+   - .logo-crop--equalhousing: the black area is the TOP block of the 1224x1584
+     source (white space below). A ~1.45:1 box + object-position top shows that
+     block and clips the empty space beneath.
+   ----------------------------------------------------------------------------- */
+.logo-crop {
+  display: inline-block;
+  overflow: hidden;               /* clip everything outside the box = the crop */
+  flex: 0 0 auto;
+  line-height: 0;                 /* remove inline-image baseline gap */
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.logo-crop img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;              /* fill the box, cropping the overflow */
+  max-width: none;                /* override the global img max-width:100% cap */
+}
+
+/* --- Burgan mark in the header, right of the "Designed Realty" wordmark --- */
+/* Square box matched to the header brand-logo height (44px) so it lines up. */
+.logo-crop--burgan {
+  width: 44px;
+  height: 44px;
+}
+.logo-crop--burgan img {
+  object-position: center center; /* center on the black square */
+}
+
+/* --- Equal Housing mark in the footer, right of the Zillow link --- */
+/* Box proportioned to the black rectangle (~1.45:1), sized to sit alongside the
+   ~24px social icons + text without dominating the row. */
+.logo-crop--equalhousing {
+  width: 52px;
+  height: 36px;
+}
+.logo-crop--equalhousing img {
+  /* The black block starts a bit below the top and is horizontally centered;
+     nudge the sampling window up so the house + text block is centered in view. */
+  object-position: center 22%;
+  /* Zoom in slightly so the white outer margin never peeks into the box. */
+  transform: scale(1.15);
+}

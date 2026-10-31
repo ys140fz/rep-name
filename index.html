@@ -19,6 +19,12 @@
       <img class="brand-logo" src="images/DesignedRealtyLogo.jpeg" alt="Designed Realty logo"
            onerror="this.style.display='none'">
       <span class="brand-name">Designed Realty</span>
+      <!-- Burgan Realty mark, CSS-cropped to just the black square (the source
+           JPEG has white bars on the left/right that .logo-crop--burgan hides). -->
+      <span class="logo-crop logo-crop--burgan">
+        <img class="brand-burgan-logo" src="images/BurganRealtyLogo.jpeg"
+             alt="Burgan Realty logo" onerror="this.closest('.logo-crop').style.display='none'">
+      </span>
     </a>
 
     <!-- Mobile nav toggle. Visible only below 768px (Task 4.2 CSS); behavior wired in Task 12.2.
@@ -233,19 +239,16 @@
           </svg>
           <span class="social-label">Zillow</span>
         </a>
-      </nav>
 
-      <!-- Footer logos (Req 10.1): both marks have dark/black backgrounds, so they
-           sit cleanly on the navy footer surface. Each carries a non-empty,
-           descriptive alt of <=125 chars. Inline onerror hides a broken image so
-           its alt text shows in its place; Task 12.1 additionally wires
-           handleImageError() from js/main.js to statically authored images. -->
-      <div class="footer-logos">
-        <img class="footer-logo" src="images/BurganRealtyLogo.jpeg"
-             alt="Burgan Realty logo" onerror="this.style.display='none'">
-        <img class="footer-logo" src="images/EqualHousingLogo.jpeg"
-             alt="Equal Housing Opportunity logo" onerror="this.style.display='none'">
-      </div>
+        <!-- Equal Housing Opportunity mark, placed to the right of Zillow and
+             CSS-cropped to just the black rectangle (the source JPEG has white
+             space below that .logo-crop--equalhousing hides). -->
+        <span class="logo-crop logo-crop--equalhousing">
+          <img class="social-eho-logo" src="images/EqualHousingLogo.jpeg"
+               alt="Equal Housing Opportunity logo"
+               onerror="this.closest('.logo-crop').style.display='none'">
+        </span>
+      </nav>
 
       <!-- Small static copyright line — hardcoded, no JavaScript required. -->
       <p class="footer-copy">&copy; 2025 Larisa Burgan &middot; Designed Realty</p>
