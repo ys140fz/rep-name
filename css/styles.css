@@ -1286,16 +1286,27 @@ section[id] {
 }
 
 /* --- Equal Housing mark in the footer, right of the Zillow link --- */
-/* Box proportioned to the black rectangle (~1.45:1), sized to sit alongside the
+/* Box proportioned to the black rectangle (~1.47:1), sized to sit alongside the
    ~24px social icons + text without dominating the row. */
 .logo-crop--equalhousing {
-  width: 52px;
+  width: 53px;
   height: 36px;
+  position: relative;             /* positioning context for the sized+shifted img */
 }
+/* Precise crop by exact geometry (no object-fit): the black rectangle occupies
+   x[150..1105], y[170..820] of the 1224x1584 source — i.e. ~78% of the width and
+   ~41% of the height, with its top-left at ~12.3% / ~10.7%.
+   We render the FULL image at a size where the black block equals the 53x36 box
+   (full image = 67.9 x 87.9px), then shift it up/left so the block's top-left
+   lands at the box's top-left. overflow:hidden on .logo-crop clips the rest, so
+   only the black rectangle shows — no white on any side. */
 .logo-crop--equalhousing img {
-  /* The black block starts a bit below the top and is horizontally centered;
-     nudge the sampling window up so the house + text block is centered in view. */
-  object-position: center 22%;
-  /* Zoom in slightly so the white outer margin never peeks into the box. */
-  transform: scale(1.15);
+  object-fit: fill;               /* not used for cropping here; sizing is explicit */
+  width: 67.9px;
+  height: 87.9px;
+  max-width: none;
+  position: absolute;
+  left: -8.3px;                   /* black block left edge (12.3% * 67.9) */
+  top: -9.4px;                    /* black block top edge (10.7% * 87.9) */
+  transform: none;
 }
