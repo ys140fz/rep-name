@@ -53,19 +53,21 @@
     <!-- Task 5: Hero — logo, the page's single level-1 heading "Larisa Burgan", business, headline, CTA -->
     <section id="hero">
       <div class="hero-inner">
-        <!-- Company logo (navy background) presented on a navy chip so it blends with the
-             hero band rather than clashing with the cream page (see design: dark-bg logo handling).
-             The large source (2066x2074) is constrained purely via CSS on .hero-logo.
+        <!-- Burgan Realty mark on a navy chip, shown at the large hero size and
+             CSS-cropped to just the black square (the source JPEG's white side
+             bars are clipped by .logo-crop--burgan-hero).
              Inline onerror hides the broken image and reveals its alt text (Req 1.7 / 10.2);
              Task 12.1 additionally wires handleImageError() from js/main.js. -->
         <span class="hero-logo-chip">
-          <img class="hero-logo" src="images/DesignedRealtyLogo.jpeg"
-               alt="Designed Realty logo" onerror="this.style.display='none'">
+          <span class="logo-crop logo-crop--burgan-hero">
+            <img class="hero-logo" src="images/BurganRealtyLogo.jpeg"
+                 alt="Burgan Realty logo" onerror="this.closest('.logo-crop').style.display='none'">
+          </span>
         </span>
 
         <!-- The one and only level-1 heading for the page (Req 1.1, 10.7). -->
         <h1>Larisa Burgan</h1>
-        <p class="business">Designed Realty (Kirkland Office)</p>
+        <p class="business">With Designed Realty (Kirkland Office)</p>
         <p class="headline">Trusted Real Estate Agent Serving the Greater Puget Sound Region</p>
 
         <!-- Exactly one call-to-action (Req 1.4). The href is enough for now;

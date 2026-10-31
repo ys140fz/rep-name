@@ -1285,6 +1285,22 @@ section[id] {
   object-position: center center; /* center on the black square */
 }
 
+/* --- Burgan mark in the HERO, large size (replaces the old Designed Realty logo) --- */
+/* 180x180 square to match the previous hero logo height. The 1920x1080 source
+   has its black square centered with white bars left/right; a square box +
+   object-fit:cover centered horizontally shows only that center square. */
+.logo-crop--burgan-hero {
+  width: 180px;
+  height: 180px;
+}
+.logo-crop--burgan-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;              /* fill the square, cropping the side bars away */
+  object-position: center center; /* center on the black square */
+  max-width: none;
+}
+
 /* --- Equal Housing mark in the footer, right of the Zillow link --- */
 /* Box proportioned to the black rectangle (~1.47:1), sized to sit alongside the
    ~24px social icons + text without dominating the row. */
